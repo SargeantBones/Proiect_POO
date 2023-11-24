@@ -9,7 +9,7 @@ class Ecuatie
 {
 	char* ecuatie = nullptr;
 	string copie = "";
-	static const int DimensiuneMaximaEcuatie = 10;
+	static const int DimensiuneMaximaEcuatie = 100;
 public:
 	static char* copiereChar(const char* ecuatie)
 	{
@@ -45,9 +45,28 @@ public:
 		return this->copie;
 	}
 
+	Ecuatie()
+	{
+
+	}
+	Ecuatie(string copie = "Ecuatie nedefinita") : copie(copie)
+	{
+		setEcuatie();
+	}
+
 };
 
+int operator == (Ecuatie& ecuatie, string ecuatie2)
+{
+	if (ecuatie2 == ecuatie.getEcuatie()) return 1;
+	else return 0;
+}
 
+int operator != (Ecuatie& ecuatie, string ecuatie2)
+{
+	if (ecuatie2 != ecuatie.getEcuatie()) return 1;
+	else return 0;
+}
 void operator << (ostream& consola, Ecuatie& ecuatie)
 {
 	consola << ecuatie.getEcuatie();
