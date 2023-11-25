@@ -1,4 +1,5 @@
 #pragma once
+#define CRT_SECURE_NO_WARNINGS
 
 #include<string>
 #include<iostream>
@@ -11,6 +12,7 @@ class Ecuatie
 	string copie = "";
 	static const int DimensiuneMaximaEcuatie = 100;
 public:
+	// FACE COPIE A SIRULUI DINAMIC DE CARACTERE //
 	static char* copiereChar(const char* ecuatie)
 	{
 		if (ecuatie == nullptr) return nullptr;
@@ -46,6 +48,7 @@ public:
 		return this->copie;
 	}
 
+	// METODA DE ELIMINARE A SPETIILOR FARA ROST PENTRU USURAREA PROCESULUI DE SEPARARE
 	char* eliminareSpatii(char* ecuatie)
 	{
 		char* copie = new char[strlen(ecuatie) + 1];

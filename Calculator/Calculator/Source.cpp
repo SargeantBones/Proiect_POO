@@ -3,6 +3,7 @@
 #include<iostream>
 #include<string>
 #include "Ecuatie.h"
+#include "Separator.h"
 
 using namespace std;
 
@@ -11,12 +12,9 @@ int main()
 	cout << "Va multumim pentru ca a-ti ales sa folosit Calc-Scrip ver 0.1.";
 	cout << endl<< "Introduceti ecuatia pe care o doriti sa o calculati.Daca dorit sa iesiti din program, tastati 'Exit' "<<endl;
 	Ecuatie ecuatie("Ecuatie Nedefinita");
+	Separator ecuatieSeparata;
+	string copie;
 
-	cout << "Ecuatie: ";
-	cin >> ecuatie;
-
-	cout << "Rezultat: ";
-	cout << ecuatie;
 	while (ecuatie != "Exit")
 	{
 		//functii
@@ -27,10 +25,13 @@ int main()
 		if (ecuatie == "Exit") cout << "Multumim de vizita!";
 		else
 		{
-			cout << "Rezultat: ";
-			cout << ecuatie;
+			copie = ecuatie.getEcuatie();
+			ecuatieSeparata.setEcuatie(copie);
 
+			ecuatieSeparata.setNumere();
+			//ecuatieSeparata.getNumere();
 		}
 	}
+
 	return 0;
 }
