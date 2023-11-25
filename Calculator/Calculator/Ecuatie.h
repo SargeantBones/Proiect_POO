@@ -21,10 +21,12 @@ public:
 			return copie;
 		}
 	}
+
 	void setEcuatie()
 	{
 			delete this->ecuatie;
 			this->ecuatie = copiereChar(this->copie.c_str());
+			this->ecuatie = copiereChar(eliminareSpatii(this->ecuatie));
 	}
 	string getEcuatie()
 	{
@@ -33,16 +35,35 @@ public:
 
 	void setCopie(const string cop)
 	{
-		if (cop.size() > DimensiuneMaximaEcuatie)
+		if (cop.length() > Ecuatie::DimensiuneMaximaEcuatie)
 		{
 			this->copie = "ECUATIE MAI MARI DE 100 DE CARACTERE NEPERMISA!";
 		}
 		else this->copie = cop;
 	}
-	
 	string getCopie()
 	{
 		return this->copie;
+	}
+
+	char* eliminareSpatii(char* ecuatie)
+	{
+		char* copie = new char[strlen(ecuatie) + 1];
+		strcpy_s(copie, strlen(ecuatie) + 1, ecuatie);
+		
+		for (int i = 0; i < strlen(copie); i++)
+		{
+			if (copie[i] == ' ' && copie[i + 1] == ' ')
+			{
+				for (int j = i+1; j < strlen(copie); j++)
+				{
+					copie[j] = copie[j+1];
+				}
+				i--;
+			}
+		}
+		return copie;
+	
 	}
 
 	Ecuatie()
@@ -51,9 +72,19 @@ public:
 	}
 	Ecuatie(string copie = "Ecuatie nedefinita") : copie(copie)
 	{
+		if (copie.length() > Ecuatie::DimensiuneMaximaEcuatie)
+		{
+			this->copie = "ECUATIE MAI MARI DE 100 DE CARACTERE NEPERMISA!";
+		}
 		setEcuatie();
 	}
 
+	~Ecuatie()
+	{
+		delete this->ecuatie;
+		this->ecuatie = nullptr;
+	}
+	friend void operator << (ostream& consola, Ecuatie& ecuatie);
 };
 
 int operator == (Ecuatie& ecuatie, string ecuatie2)
@@ -67,12 +98,12 @@ int operator != (Ecuatie& ecuatie, string ecuatie2)
 	if (ecuatie2 != ecuatie.getEcuatie()) return 1;
 	else return 0;
 }
+
 void operator << (ostream& consola, Ecuatie& ecuatie)
 {
 	consola << ecuatie.getEcuatie();
 	consola << endl;
 }
-
 
 void operator >> (istream& consola, Ecuatie& ecuatie)
 {

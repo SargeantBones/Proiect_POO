@@ -17,7 +17,6 @@ int main()
 
 	cout << "Rezultat: ";
 	cout << ecuatie;
-
 	while (ecuatie != "Exit")
 	{
 		//functii
