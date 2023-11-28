@@ -13,6 +13,7 @@ class Separator
 	char* ecuatie = nullptr;
 	char* semne = nullptr;
 	int noNumber = 0;
+	int noSemne = 0;
 public:
 
 	static char* copiereChar(const char* ecuatie)
@@ -24,6 +25,29 @@ public:
 			strcpy_s(copie, strlen(ecuatie) + 1, ecuatie);
 			return copie;
 		}
+	}
+
+	void setNoNumber(int n)
+	{
+		this->noNumber = n;
+	}
+	int getNoNumber()
+	{
+		return this->noNumber;
+	}
+
+	void setNoSemne()
+	{
+		int k = 0;
+		for (int i = 0; i < strlen(this->ecuatie); i++)
+		{
+			if (strchr("0123456789 ", this->ecuatie[i]) == 0)k++;
+		}
+		this->noSemne = k;
+	}
+	int getNoSemne()
+	{
+		return this->noSemne;
 	}
 
 	void setEcuatie(string copie)
@@ -42,7 +66,6 @@ public:
 
 		char* copie = new char[strlen(this->ecuatie) + 1];
 		strcpy_s(copie, strlen(this->ecuatie) + 1, this->ecuatie);
-
 		for (int i = 0; i < strlen(copie); i++)
 		{
 			if (strchr("0123456789 ", copie[i]) == 0 && strchr("0123456789", copie[i - 1] == ' '))
@@ -91,18 +114,17 @@ public:
 			if (copie[i] == ' ')k++;
 		}
 
-
 		this->noNumber = k + 1;
 		return copie;
 	}
 
 	void setNumere()
 	{
-		char* copie;
+		char* copie = nullptr;
 		copie = new char[strlen(this->eliminareCaractere()) + 1];
 		copie = this->eliminareCaractere();
 
-		delete[] this->numere;
+		this->numere = nullptr;
 		this->numere = new int[this->noNumber];
 
 		int k = 0, p =-1 ,q, n;
@@ -139,13 +161,52 @@ public:
 		copie = this->numere;
 		return copie;
 	}
+
+	char* eliminareNumere()
+	{
+		int k = 0, j = 0;
+
+		for (int i = 0; i < strlen(this->ecuatie); i++)
+		{
+			if (strchr("0123456789 ", this->ecuatie[i]) == 0)k++;
+		}
 	
+		char* copie = new char[k+1];
+
+		for (int i = 0; i < strlen(this->ecuatie); i++)
+		{
+			if (strchr("+-*/#^()[]", this->ecuatie[i]) != 0)
+			{
+				copie[j] = this->ecuatie[i];
+				j++;
+			}
+		}
+		copie[k] = '\0';
+		return copie;
+
+	}
+
+	void setSemne()
+	{
+		this->setNoSemne();
+		this->semne = nullptr;
+		this->semne = new char[this->noSemne + 1];
+		this->semne = this->eliminareNumere();
+	}
+	
+	char* getSemne()
+	{
+		char* copie;
+		copie = new char[this->noSemne + 1];
+		copie = this->semne;
+		return copie;
+	}
 	~Separator()
 	{
 		delete[] this->numere;
 		this->numere = nullptr;
 
-		delete[] this->semne;
+		delete this->semne;
 		this->semne = nullptr;
 
 		delete this->ecuatie;

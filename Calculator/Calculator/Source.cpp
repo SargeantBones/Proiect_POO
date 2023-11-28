@@ -15,6 +15,10 @@ int main()
 	Separator ecuatieSeparata;
 	string copie;
 
+	int* numere = nullptr;
+	char* semne = nullptr;
+	int n, m;
+
 	while (ecuatie != "Exit")
 	{
 		//functii
@@ -25,11 +29,27 @@ int main()
 		if (ecuatie == "Exit") cout << "Multumim de vizita!";
 		else
 		{
+			// NUMERE PRIMESTE VECTORU DE NUMERE DIN ECUATIE //
 			copie = ecuatie.getEcuatie();
 			ecuatieSeparata.setEcuatie(copie);
 
 			ecuatieSeparata.setNumere();
-			//ecuatieSeparata.getNumere();
+			n = ecuatieSeparata.getNoNumber();
+
+			numere = new int[n];
+			numere = ecuatieSeparata.getNumere();
+
+			// SEMNE PRIMESTE SIRUL DE CARACTERE CE CONTIN SEMNELE ARITMETICE //
+			ecuatieSeparata.setNoSemne();
+
+			m = ecuatieSeparata.getNoSemne();
+			semne = new char[m + 1];
+
+			ecuatieSeparata.setSemne();
+			semne = ecuatieSeparata.getSemne();
+
+			delete semne;
+			delete[] numere;
 		}
 	}
 
