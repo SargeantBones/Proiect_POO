@@ -4,6 +4,7 @@
 #include<iostream>
 #include<string>
 
+
 using namespace std;
 
 class Separator
@@ -86,29 +87,57 @@ public:
 		}
 		for (int i = 0; i < strlen(copie); i++)
 		{
-			cout << copie[i];
+	
 			if (copie[i] == ' ')k++;
 		}
 
-		cout << endl << copie;
+
 		this->noNumber = k + 1;
 		return copie;
 	}
 
 	void setNumere()
 	{
-		
-		char* copie = this->eliminareCaractere();
-		cout << endl << this->noNumber;
+		char* copie;
+		copie = new char[strlen(this->eliminareCaractere()) + 1];
+		copie = this->eliminareCaractere();
+
+		delete[] this->numere;
+		this->numere = new int[this->noNumber];
+
+		int k = 0, p =-1 ,q, n;
+		char* aux;
+
+		for (int i = 0; i < strlen(copie); i++)
+		{
+			if (copie[i] != ' ' && p == -1)p = i;
+			else if(copie[i] == ' ')
+			{
+				q = i;
+				n = 0;
+				for (int j = p; j < q; j++)
+				{
+					n = n * 10 + (int)copie[j] - 48;
+				}
+				this -> numere[k] = n;
+				k++;
+				p = -1;
+			}
+		}
+		n = 0;
+		for (int i = p; i < strlen(copie); i++)
+		{
+			n=n*10 + (int)copie[i] - 48;
+		}
+		this->numere[this->noNumber - 1] = n;
 	}
-	void getNumere()
+	int* getNumere()
 	{
 		
-		int i;
-		for (i = 0; i < this->noNumber; i++)
-		{
-			cout << this->numere[i] << " ";
-		}
+		int* copie;
+		copie = new int[this->noNumber];
+		copie = this->numere;
+		return copie;
 	}
 	
 	~Separator()
