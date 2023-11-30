@@ -9,7 +9,7 @@ using namespace std;
 
 class Separator
 {
-	int* numere = nullptr;
+	float* numere = nullptr;
 	char* ecuatie = nullptr;
 	char* semne = nullptr;
 	int noNumber = 0;
@@ -68,13 +68,13 @@ public:
 		strcpy_s(copie, strlen(this->ecuatie) + 1, this->ecuatie);
 		for (int i = 0; i < strlen(copie); i++)
 		{
-			if (strchr("0123456789 ", copie[i]) == 0 && strchr("0123456789", copie[i - 1] == ' '))
+			if (strchr("0123456789. ", copie[i]) == 0 && strchr("0123456789", copie[i - 1])!=0)
 			{
 				copie[i] = ' ';
 				i--;
 			}
 			else
-			if (strchr("0123456789 ", copie[i])==0)
+			if (strchr("0123456789. ", copie[i])==0)
 			{
 				for (int j = i; j < strlen(copie); j++)
 				{
@@ -85,7 +85,7 @@ public:
 		}
 		for (int i = 0; i < strlen(copie); i++)
 		{
-			if (copie[i] == ' ' && copie[i + 1] == ' ')
+			if ((copie[i] == ' ' && copie[i + 1] == ' ') || (copie[i] == '.' && copie[i + 1] == '.'))
 			{
 				for (int j = i + 1; j < strlen(copie); j++)
 				{
@@ -113,7 +113,6 @@ public:
 	
 			if (copie[i] == ' ')k++;
 		}
-
 		this->noNumber = k + 1;
 		return copie;
 	}
@@ -125,24 +124,44 @@ public:
 		copie = this->eliminareCaractere();
 
 		this->numere = nullptr;
-		this->numere = new int[this->noNumber];
+		this->numere = new float[this->noNumber];
 
-		int k = 0, p =-1 ,q, n;
+		int k = 0, p =-1 ,q, s =-1;
+		float l = 0, n = 0;
 		char* aux;
 
 		for (int i = 0; i < strlen(copie); i++)
 		{
 			if (copie[i] != ' ' && p == -1)p = i;
+			else if (copie[i] == '.' && s == -1)s = i;
 			else if(copie[i] == ' ')
 			{
 				q = i;
 				n = 0;
-				for (int j = p; j < q; j++)
+				if (s != -1)
 				{
-					n = n * 10 + (int)copie[j] - 48;
+					l = 10;
+					for (int j = p; j < s; j++)
+					{
+						n = n * 10 + (float)copie[j] - 48;
+					}
+
+					for (int j = s + 1; j < q; j++)
+					{
+						n = n + ((float)copie[j] - 48) / l;
+						l = l * 10;
+					}
+				}
+				else
+				{
+					for (int j = p; j < s; j++)
+					{
+						n = n * 10 + (float)copie[j] - 48;
+					}
 				}
 				this -> numere[k] = n;
 				k++;
+				s = -1;
 				p = -1;
 			}
 		}
@@ -153,11 +172,11 @@ public:
 		}
 		this->numere[this->noNumber - 1] = n;
 	}
-	int* getNumere()
+	float* getNumere()
 	{
 		
-		int* copie;
-		copie = new int[this->noNumber];
+		float* copie;
+		copie = new float[this->noNumber];
 		copie = this->numere;
 		return copie;
 	}

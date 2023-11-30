@@ -15,7 +15,7 @@ int main()
 	Separator ecuatieSeparata;
 	string copie;
 
-	int* numere = nullptr;
+	float* numere = nullptr;
 	char* semne = nullptr;
 	int n, m;
 
@@ -36,7 +36,7 @@ int main()
 			ecuatieSeparata.setNumere();
 			n = ecuatieSeparata.getNoNumber();
 
-			numere = new int[n];
+			numere = new float[n];
 			numere = ecuatieSeparata.getNumere();
 
 			// SEMNE PRIMESTE SIRUL DE CARACTERE CE CONTIN SEMNELE ARITMETICE //
@@ -48,7 +48,11 @@ int main()
 			ecuatieSeparata.setSemne();
 			semne = ecuatieSeparata.getSemne();
 
-			delete semne;
+			for (int i = 0; i < n; i++)
+			{
+				cout << numere[i]<<" ";
+			}
+
 			delete[] numere;
 		}
 	}
