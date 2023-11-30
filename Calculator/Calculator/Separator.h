@@ -154,7 +154,7 @@ public:
 				}
 				else
 				{
-					for (int j = p; j < s; j++)
+					for (int j = p; j < q; j++)
 					{
 						n = n * 10 + (float)copie[j] - 48;
 					}
@@ -187,7 +187,7 @@ public:
 
 		for (int i = 0; i < strlen(this->ecuatie); i++)
 		{
-			if (strchr("0123456789 ", this->ecuatie[i]) == 0)k++;
+			if (strchr("0123456789. ", this->ecuatie[i]) == 0)k++;
 		}
 	
 		char* copie = new char[k+1];
@@ -212,7 +212,6 @@ public:
 		this->semne = new char[this->noSemne + 1];
 		this->semne = this->eliminareNumere();
 	}
-	
 	char* getSemne()
 	{
 		char* copie;
@@ -220,6 +219,19 @@ public:
 		copie = this->semne;
 		return copie;
 	}
+
+	Separator()
+	{
+
+	}
+	Separator(string ecuatie)
+	{
+		setEcuatie(ecuatie);
+		setNumere();
+		setSemne();
+	}
+
+
 	~Separator()
 	{
 		delete[] this->numere;
@@ -231,4 +243,44 @@ public:
 		delete this->ecuatie;
 		this->ecuatie = nullptr;
 	}
+
+	float& operator [](int index)
+	{
+		if (index<0 || index > this->noNumber)throw exception("index incorect");
+		else return this->numere[index];
+	}
+	
+	explicit operator int()
+	{
+		return this->noNumber;
+	}
+
 };
+
+
+
+void operator >> (istream& consola, Separator& s)
+{
+	string copie;
+	getline(consola, copie);
+	s.setEcuatie(copie);
+	s.setSemne();
+	s.setNumere();
+}
+
+void operator << (ostream& consola, Separator& s)
+{
+	float* copie;
+	copie = new float[s.getNoNumber()];
+	copie = s.getNumere();
+	for (int i = 0; i < s.getNoNumber(); i++)
+	{
+		consola << copie[i] << " ";
+	}
+	consola << endl;
+
+	char* copie2;
+	copie2 = new char[s.getNoSemne()+1];
+	copie2 = s.getSemne();
+	consola << copie2 << endl;
+}

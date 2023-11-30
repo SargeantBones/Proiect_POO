@@ -47,12 +47,11 @@ int main()
 
 			ecuatieSeparata.setSemne();
 			semne = ecuatieSeparata.getSemne();
-
-			for (int i = 0; i < n; i++)
-			{
-				cout << numere[i]<<" ";
-			}
-
+			
+			cout << ecuatieSeparata;
+	
+			
+			delete semne;
 			delete[] numere;
 		}
 	}
