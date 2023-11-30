@@ -43,6 +43,22 @@ public:
 		{
 			if (strchr("0123456789 ", this->ecuatie[i]) == 0)k++;
 		}
+
+		int p = 0;
+		if (this->ecuatie[0] == '-')
+		{
+			k--;
+			p = 1;
+		}
+
+		for (int i = p; i < strlen(this->ecuatie); i++)
+		{
+			if (this->ecuatie[i] == '-')
+			{
+				if ((strchr("-+*/#^([", this->ecuatie[i - 2]) != 0) || (strchr("0123456789", this->ecuatie[i + 2]) == 0))k--;
+			}
+		}
+
 		this->noSemne = k;
 	}
 	int getNoSemne()
@@ -219,9 +235,13 @@ public:
 		}
 
 		int p = 0;
-		if (this->ecuatie[0] == '-') p = 1;
+		if (this->ecuatie[0] == '-')
+		{
+			p = 1;
+			k--;
+		}
 
-		for (int i = 0; i < strlen(this->ecuatie); i++)
+		for (int i = p; i < strlen(this->ecuatie); i++)
 		{
 			if (this->ecuatie[i] == '-')
 			{
@@ -247,7 +267,6 @@ public:
 				}
 			}
 		}
-		cout << k;
 		copie[k] = '\0';
 		return copie;
 

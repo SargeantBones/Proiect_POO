@@ -4,6 +4,7 @@
 #include<string>
 #include "Ecuatie.h"
 #include "Separator.h"
+#include "Calculator.h"
 
 using namespace std;
 
@@ -13,6 +14,7 @@ int main()
 	cout << endl<< "Introduceti ecuatia pe care o doriti sa o calculati.Daca dorit sa iesiti din program, tastati 'Exit' "<<endl;
 	Ecuatie ecuatie("Ecuatie Nedefinita");
 	Separator ecuatieSeparata;
+	Calculator calc;
 	string copie;
 
 	float* numere = nullptr;
@@ -51,6 +53,15 @@ int main()
 			semne = ecuatieSeparata.getSemne();
 			
 			cout << ecuatieSeparata;
+			cout << endl;
+
+
+			calc.setNumere(numere, n);
+			calc.setSemne(semne);
+
+			cout << calc;
+
+
 			delete semne;
 			delete[] numere;
 		}
