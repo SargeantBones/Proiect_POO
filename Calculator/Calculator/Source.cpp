@@ -19,6 +19,8 @@ int main()
 	char* semne = nullptr;
 	int n, m;
 
+
+
 	while (ecuatie != "Exit")
 	{
 		//functii
@@ -49,8 +51,6 @@ int main()
 			semne = ecuatieSeparata.getSemne();
 			
 			cout << ecuatieSeparata;
-	
-			
 			delete semne;
 			delete[] numere;
 		}
