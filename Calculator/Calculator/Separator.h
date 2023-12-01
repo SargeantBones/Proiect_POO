@@ -9,7 +9,7 @@ using namespace std;
 
 class Separator
 {
-	float* numere = nullptr;
+	double* numere = nullptr;
 	char* ecuatie = nullptr;
 	char* semne = nullptr;
 	int noNumber = 0;
@@ -55,7 +55,7 @@ public:
 		{
 			if (this->ecuatie[i] == '-')
 			{
-				if ((strchr("-+*/#^([", this->ecuatie[i - 2]) != 0) || (strchr("0123456789", this->ecuatie[i + 2]) == 0))k--;
+				if ((strchr("-+*/#^([", this->ecuatie[i - 1]) != 0) || (strchr("0123456789", this->ecuatie[i + 1]) == 0))k--;
 			}
 		}
 
@@ -166,10 +166,11 @@ public:
 		copie = this->eliminareCaractere();
 
 		this->numere = nullptr;
-		this->numere = new float[this->noNumber];
+		this->numere = new double[this->noNumber];
 
 		int k = 0, p =-1 ,q, s =-1;
-		float l = 0, n = 0;
+		float l = 0;
+		double n = 0;
 		char* aux;
 
 		for (int i = 0; i < strlen(copie); i++)
@@ -216,12 +217,13 @@ public:
 		if (copie[p - 2] == '-' || copie[p - 1] == '-') n = n * -1;
 		this->numere[this->noNumber - 1] = n;
 	}
-	float* getNumere()
+	double* getNumere()
 	{
-		
-		float* copie;
-		copie = new float[this->noNumber];
+
+		double* copie;
+		copie = new double[this->noNumber];
 		copie = this->numere;
+		cout << endl;
 		return copie;
 	}
 
@@ -245,7 +247,7 @@ public:
 		{
 			if (this->ecuatie[i] == '-')
 			{
-				if ((strchr("-+*/#^([", this->ecuatie[i - 2]) != 0) || (strchr("0123456789", this->ecuatie[i + 2]) == 0))k--;
+				if ((strchr("-+*/#^([", this->ecuatie[i - 1]) != 0) || (strchr("0123456789", this->ecuatie[i + 1]) == 0))k--;
 			}
 		}
 
@@ -260,7 +262,7 @@ public:
 
 			if (this->ecuatie[i] == '-')
 			{
-				if (strchr("0123456789])", this->ecuatie[i - 2]) != 0 && (strchr("0123456789", this->ecuatie[i + 2]) != 0))
+				if (strchr("0123456789])", this->ecuatie[i - 1]) != 0 && (strchr("0123456789", this->ecuatie[i + 1]) != 0))
 				{
 					copie[j] = this->ecuatie[i];
 					j++;
@@ -311,7 +313,7 @@ public:
 		this->ecuatie = nullptr;
 	}
 
-	float& operator [](int index)
+	double& operator [](int index)
 	{
 		if (index<0 || index > this->noNumber)throw exception("index incorect");
 		else return this->numere[index];
@@ -334,8 +336,8 @@ void operator >> (istream& consola, Separator& s)
 
 void operator << (ostream& consola, Separator& s)
 {
-	float* copie;
-	copie = new float[s.getNoNumber()];
+	double* copie;
+	copie = new double[s.getNoNumber()];
 	copie = s.getNumere();
 	for (int i = 0; i < s.getNoNumber(); i++)
 	{

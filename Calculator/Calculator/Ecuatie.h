@@ -12,7 +12,7 @@ class Ecuatie
 	string copie = "";
 	static const int DimensiuneMaximaEcuatie = 100;
 public:
-	// FACE COPIE A SIRULUI DINAMIC DE CARACTERE //
+
 	static char* copiereChar(const char* ecuatie)
 	{
 		if (ecuatie == nullptr) return nullptr;
@@ -48,7 +48,6 @@ public:
 		return this->copie;
 	}
 
-	// METODA DE ELIMINARE A SPETIILOR FARA ROST PENTRU USURAREA PROCESULUI DE SEPARARE
 	char* eliminareSpatii(char* ecuatie)
 	{
 		char* copie = new char[strlen(ecuatie) + 1];
@@ -56,9 +55,9 @@ public:
 		
 		for (int i = 0; i < strlen(copie); i++)
 		{
-			if (copie[i] == ' ' && copie[i + 1] == ' ')
+			if (copie[i] == ' ')
 			{
-				for (int j = i+1; j < strlen(copie); j++)
+				for (int j = i; j < strlen(copie); j++)
 				{
 					copie[j] = copie[j+1];
 				}

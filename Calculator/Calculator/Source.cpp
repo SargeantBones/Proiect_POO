@@ -17,7 +17,7 @@ int main()
 	Calculator calc;
 	string copie;
 
-	float* numere = nullptr;
+	double* numere = nullptr;
 	char* semne = nullptr;
 	int n, m;
 
@@ -40,7 +40,7 @@ int main()
 			ecuatieSeparata.setNumere();
 			n = ecuatieSeparata.getNoNumber();
 
-			numere = new float[n];
+			numere = new double[n];
 			numere = ecuatieSeparata.getNumere();
 
 			// SEMNE PRIMESTE SIRUL DE CARACTERE CE CONTIN SEMNELE ARITMETICE //
@@ -51,15 +51,13 @@ int main()
 
 			ecuatieSeparata.setSemne();
 			semne = ecuatieSeparata.getSemne();
-			
-			cout << ecuatieSeparata;
-			cout << endl;
-
 
 			calc.setNumere(numere, n);
 			calc.setSemne(semne);
 
+		
 			cout << calc;
+			cout << calc.Calcul();
 
 
 			delete semne;
