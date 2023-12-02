@@ -2,6 +2,7 @@
 
 #include<iostream>
 #include<string>
+#include <cmath>
 #include "Ecuatie.h"
 #include "Separator.h"
 #include "Calculator.h"
@@ -16,24 +17,21 @@ int main()
 	Separator ecuatieSeparata;
 	Calculator calc;
 	string copie;
-
+	string iesire;
+	Calculator copi;
 	double* numere = nullptr;
 	char* semne = nullptr;
 	int n, m;
 
 
-
 	while (ecuatie != "Exit")
 	{
-		//functii
-		
 		cout << endl << "Ecuatie: ";
 		cin >> ecuatie;
 
 		if (ecuatie == "Exit") cout << "Multumim de vizita!";
 		else
 		{
-			// NUMERE PRIMESTE VECTORU DE NUMERE DIN ECUATIE //
 			copie = ecuatie.getEcuatie();
 			ecuatieSeparata.setEcuatie(copie);
 
@@ -43,7 +41,6 @@ int main()
 			numere = new double[n];
 			numere = ecuatieSeparata.getNumere();
 
-			// SEMNE PRIMESTE SIRUL DE CARACTERE CE CONTIN SEMNELE ARITMETICE //
 			ecuatieSeparata.setNoSemne();
 
 			m = ecuatieSeparata.getNoSemne();
@@ -52,13 +49,13 @@ int main()
 			ecuatieSeparata.setSemne();
 			semne = ecuatieSeparata.getSemne();
 
+
 			calc.setNumere(numere, n);
 			calc.setSemne(semne);
 
-		
+			
 			cout << calc;
 			cout << calc.Calcul();
-
 
 			delete semne;
 			delete[] numere;

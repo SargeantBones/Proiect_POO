@@ -55,7 +55,7 @@ public:
 		{
 			if (this->ecuatie[i] == '-')
 			{
-				if ((strchr("-+*/#^([", this->ecuatie[i - 1]) != 0) || (strchr("0123456789", this->ecuatie[i + 1]) == 0))k--;
+				if ((strchr("-+*/#^([", this->ecuatie[i - 1]) != 0) || (strchr("0123456789([", this->ecuatie[i + 1]) == 0))k--;
 			}
 		}
 
@@ -210,9 +210,26 @@ public:
 			}
 		}
 		n = 0;
-		for (int i = p; i < strlen(copie); i++)
+		if (s == -1)
 		{
-			n=n*10 + (int)copie[i] - 48;
+			for (int i = p; i < strlen(copie); i++)
+			{
+				n = n * 10 + (int)copie[i] - 48;
+			}
+		}
+		else
+		{
+			l = 10;
+			for (int i = p; i < s; i++)
+			{
+				n = n * 10 + (float)copie[i] - 48;
+			}
+
+			for (int i = s + 1; i < strlen(copie); i++)
+			{
+				n = n + ((float)copie[i] - 48) / l;
+				l = l * 10;
+			}
 		}
 		if (copie[p - 2] == '-' || copie[p - 1] == '-') n = n * -1;
 		this->numere[this->noNumber - 1] = n;
@@ -247,7 +264,7 @@ public:
 		{
 			if (this->ecuatie[i] == '-')
 			{
-				if ((strchr("-+*/#^([", this->ecuatie[i - 1]) != 0) || (strchr("0123456789", this->ecuatie[i + 1]) == 0))k--;
+				if ((strchr("-+*/#^([", this->ecuatie[i - 1]) != 0) || (strchr("0123456789([", this->ecuatie[i + 1]) == 0))k--;
 			}
 		}
 
@@ -262,7 +279,7 @@ public:
 
 			if (this->ecuatie[i] == '-')
 			{
-				if (strchr("0123456789])", this->ecuatie[i - 1]) != 0 && (strchr("0123456789", this->ecuatie[i + 1]) != 0))
+				if (strchr("0123456789])", this->ecuatie[i - 1]) != 0 && (strchr("0123456789([", this->ecuatie[i + 1]) != 0))
 				{
 					copie[j] = this->ecuatie[i];
 					j++;
