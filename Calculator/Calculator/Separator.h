@@ -169,7 +169,7 @@ public:
 		this->numere = new double[this->noNumber];
 
 		int k = 0, p =-1 ,q, s =-1;
-		float l = 0;
+		double l = 0;
 		double n = 0;
 		char* aux;
 
@@ -186,12 +186,12 @@ public:
 					l = 10;
 					for (int j = p; j < s; j++)
 					{
-						n = n * 10 + (float)copie[j] - 48;
+						n = n * 10 + (double)copie[j] - 48;
 					}
 
 					for (int j = s + 1; j < q; j++)
 					{
-						n = n + ((float)copie[j] - 48) / l;
+						n = n + ((double)copie[j] - 48) / l;
 						l = l * 10;
 					}
 				}
@@ -199,7 +199,8 @@ public:
 				{
 					for (int j = p; j < q; j++)
 					{
-						n = n * 10 + (float)copie[j] - 48;
+						n = n * 10 + (double)copie[j] - 48;
+						
 					}
 				}
 				if (copie[p - 2] == '-' || copie[p - 1] == '-') n = n * -1;
@@ -320,12 +321,15 @@ public:
 
 	~Separator()
 	{
+		this->numere = new double;
 		delete[] this->numere;
 		this->numere = nullptr;
-
+		
+		this->semne = new char;
 		delete this->semne;
 		this->semne = nullptr;
 
+		this->ecuatie = new char;
 		delete this->ecuatie;
 		this->ecuatie = nullptr;
 	}

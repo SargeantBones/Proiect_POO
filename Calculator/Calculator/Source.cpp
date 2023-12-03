@@ -22,6 +22,7 @@ int main()
 	double* numere = nullptr;
 	char* semne = nullptr;
 	int n, m;
+	int verificare;
 
 
 	while (ecuatie != "Exit")
@@ -54,8 +55,9 @@ int main()
 			calc.setSemne(semne);
 
 			
-			cout << calc;
-			cout << calc.Calcul();
+			verificare = calc.verificare();
+			if (verificare == 0)cout << "ECUATIE INCORECTA INCERCATI DIN NOU";
+			else cout << "REZULTAT: " << calc.Calcul();
 
 			delete semne;
 			delete[] numere;

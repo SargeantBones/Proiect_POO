@@ -58,7 +58,7 @@ public:
 	{
 		this->semne = nullptr;
 		this->semne = new char[strlen(semn) + 1];
-		this->semne = semn;
+		strcpy_s(this->semne, strlen(semn) + 1, semn);
 		this->setNoSemne(strlen(semn));
 	}
 	char* getSemne()
@@ -88,7 +88,8 @@ public:
 		float r = this->numere[i];
 		i++;
 
-		if (j != 0 && strchr("[(", this->semne[j-1]) == 0) j++;
+		if (j != 0 && strchr("[(", this->semne[j - 1]) == 0) j++;
+		else if (j == 0 && SimnbolStocat != " ")j++;
 		else if (j == 0 || this->semne[j - 1] != '(' || this->semne[j - 1] != '[')
 		{
 			test = this->semne[j];
@@ -300,7 +301,7 @@ public:
 	{
 		float r = 0;
 		int i = 0, j = 0;
-		string simbol;
+		string simbol = " ";
 		if (this->semne[j] == '[')
 		{
 			j++;
@@ -324,6 +325,27 @@ public:
 		}
 		return r;
 	}
+
+	int verificare()
+	{
+		int verif = 1;
+		int ct = 0, ct1 = 0,ct2 = 0,ct3 = 0,ct4 = 0, ct5 = 0; 
+		for (int i = 0; i < noSemne; i++)
+		{
+			if (strchr("+-*/#^", this->semne[i]) != 0)ct++;
+			if (strchr("+-/*^#()[]", this->semne[i]) == 0)ct5++;
+			if (semne[i] == '(')ct1++;
+			else if (semne[i] == ')')ct2++;
+			else if (semne[i] == '[')ct3++;
+			else if(semne[i] == ']')ct4++;
+		}
+		
+		if (ct != noNumber - 1)verif = 0;
+		if (ct1 != ct2 || ct3 != ct4) verif = 0;
+		if (ct5 != 0)verif = 0;
+		return verif;
+	}
+
 
 	~Calculator()
 	{
@@ -362,6 +384,8 @@ public:
 		}
 		return *this;
 	}
+
+
 };
 
 
