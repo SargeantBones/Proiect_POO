@@ -3,6 +3,7 @@
 #include<iostream>
 #include<string>
 #include <cmath>
+#include<iomanip>
 #include "Ecuatie.h"
 #include "Separator.h"
 #include "Calculator.h"
@@ -54,11 +55,13 @@ int main()
 			calc.setNumere(numere, n);
 			calc.setSemne(semne);
 
-			
 			verificare = calc.verificare();
 			if (verificare == 0)cout << "ECUATIE INCORECTA INCERCATI DIN NOU";
-			else cout << "REZULTAT: " << calc.Calcul();
-
+			else
+			{
+				cout << "REZULTAT: " << setprecision(20) << calc.Calcul();
+			}
+			
 			delete semne;
 			delete[] numere;
 		}

@@ -80,12 +80,12 @@ public:
 		this->setSemne(semn);
 	}
 
-	float subEcuatie(int& i, int& j, string& SimnbolStocat)
+	double subEcuatie(int& i, int& j, string& SimnbolStocat)
 	{
 
 		string test;
-		float s = -1;
-		float r = this->numere[i];
+		double s = -1;
+		double r = this->numere[i];
 		i++;
 
 		if (j != 0 && strchr("[(", this->semne[j - 1]) == 0) j++;
@@ -249,9 +249,9 @@ public:
 		return r;
 	}
 
-	float parantezaRotunda(int& i, int& j)
+	double parantezaRotunda(int& i, int& j)
 	{
-		float r = 0;
+		double r = 0;
 		string simbol;
 		r = r + subEcuatie(i, j, simbol);
 		simbol = simbolRetinut;
@@ -274,9 +274,9 @@ public:
 		return r;
 	}
 
-	float parantezaPatrata(int& i, int& j)
+	double parantezaPatrata(int& i, int& j)
 	{
-		float r = 0;
+		double r = 0;
 		string simbol;
 		if (this->semne[j] == '(')
 		{
@@ -297,9 +297,9 @@ public:
 		return r;
 	}
 
-	float Calcul()
+	double Calcul()
 	{
-		float r = 0;
+		double r = 0;
 		int i = 0, j = 0;
 		string simbol = " ";
 		if (this->semne[j] == '[')

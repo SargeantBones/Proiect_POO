@@ -223,12 +223,12 @@ public:
 			l = 10;
 			for (int i = p; i < s; i++)
 			{
-				n = n * 10 + (float)copie[i] - 48;
+				n = n * 10 + (double)copie[i] - 48;
 			}
 
 			for (int i = s + 1; i < strlen(copie); i++)
 			{
-				n = n + ((float)copie[i] - 48) / l;
+				n = n + ((double)copie[i] - 48) / l;
 				l = l * 10;
 			}
 		}
