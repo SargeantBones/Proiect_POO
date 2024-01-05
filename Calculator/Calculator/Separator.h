@@ -171,7 +171,6 @@ public:
 		int k = 0, p =-1 ,q, s =-1;
 		double l = 0;
 		double n = 0;
-		char* aux;
 
 		for (int i = 0; i < strlen(copie); i++)
 		{
@@ -305,6 +304,25 @@ public:
 		copie = new char[this->noSemne + 1];
 		copie = this->semne;
 		return copie;
+	}
+
+	int verificare()
+	{
+		int ct = 0;
+		int verificare = 1;
+		char* copie = new char[strlen(this->ecuatie) + 1];
+		strcpy_s(copie, strlen(this->ecuatie) + 1, this->ecuatie);
+
+		for (int i = 0; i < strlen(copie); i++)
+		{
+			if (strchr("+-/*^#.()[]", copie[i]) != 0)
+			{
+				if (copie[i] == '.') ct++;
+				else ct = 0;
+				if (ct > 1) verificare = 0;
+			}
+		}
+		return verificare;
 	}
 
 	Separator()

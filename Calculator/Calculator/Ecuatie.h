@@ -110,6 +110,7 @@ void operator << (ostream& consola, Ecuatie& ecuatie)
 void operator >> (istream& consola, Ecuatie& ecuatie)
 {
 	string copie;
+	if (cin.peek() == '\n')cin.ignore();
 	getline(consola, copie);
 	ecuatie.setCopie(copie);
 
