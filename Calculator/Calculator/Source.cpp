@@ -7,66 +7,124 @@
 #include "Ecuatie.h"
 #include "Separator.h"
 #include "Calculator.h"
+#include "Verificator.h"
+#include "Verifica.h"
 #include<fstream>
 
 using namespace std;
 
 int main()
 {
-	//test//
+
 	cout << "VA MULTUMIM PENTRU CA A-TI ALES SA FOLOSIT CALC-SCRIPT VER 0.1.";
 	cout << endl<< "INTRODUCETI ECUATIA PE CARE O DORITI SA O CALCULATI.DACA DORIT SA IESITI DIN PROGRAM, TASTATI 'EXIT' "<<endl;
+	
 	Ecuatie ecuatie("Ecuatie Nedefinita");
 	Separator ecuatieSeparata;
 	Calculator calc;
-	string copie, copie2;
-	string iesire;
+
+	string copie, copie2, iesire, fisier;
 	double* numere = nullptr;
 	char* semne = nullptr;
-	int n, m, verificare, dorinta = 0;
-	string fisier;
+	int n, m, verificare, dorinta = 0, dorintaBin = 0;
 	double rezultat;
+
+	Verificator* v1 = nullptr;
+	Verifica v2;
 
 	while (ecuatie != "EXIT")
 	{
-		cout << endl << "DORITI SA VA FOLOSITI DE UN REZULTAT ANTERIOR ? TASTATI 1 PENTRU DA, SI 2 PENTRU NU: ";
-			
-			while (dorinta != 1 && dorinta != 2)
+		dorinta = 0;
+		cout << endl << "DORITI SA FOLOSITI O ECUATIE DE LA TASTATURA(1) SAU DINTR-UN FISIER(2): ";
+		while (dorinta != 1 && dorinta != 2)
+		{
+			cin >> dorinta;
+			if (dorinta != 1 && dorinta != 2) cout << endl << "NU EXISTA ACEASTA OPTIUNE INCERCATI DIN NOU: ";
+		}
+
+		// DACA UTILIZATORUL DORIESTE SA CITEASCA DE LA TASTATURA //
+		if (dorinta == 1)
+		{
+			dorintaBin = 0;
+			cout << endl << "DORITI SA VA FOLOSITI DE UN REZULTAT ANTERIOR ? TASTATI 1 PENTRU DA, SI 2 PENTRU NU: ";
+
+			while (dorintaBin != 1 && dorintaBin != 2)
 			{
-				cin >> dorinta;
-				if (dorinta != 1 && dorinta != 2) cout << endl << "NU EXISTA ACEASTA OPTIUNE INCERCATI DIN NOU: ";
+				cin >> dorintaBin;
+				if (dorintaBin != 1 && dorintaBin != 2) cout << endl << "NU EXISTA ACEASTA OPTIUNE INCERCATI DIN NOU: ";
 			}
-
-			
-
-			if (dorinta == 1)
+			// DACA UTILIZATORUL DORESTE SA SE FOLOSEASCA DE UN REZULTAT TRECUT //
+			if (dorintaBin == 1)
 			{
 				cout << "INTRODUCETI NUMELE FISIERULUI DE UNDE DORITI SA OBTINETI REZULTATUL: ";
 
 				if (cin.peek() == '\n')cin.ignore();
 				getline(cin, fisier);
 
-				ifstream g(fisier, ios::in | ios::binary);
+				ifstream g(fisier, ios::in | ios::binary | ios::_Nocreate);
+				while (!g.is_open())
+				{
+					cout << "FISIERUL PRECIZAT NU EXISTA, INCERCATI DIN NOU: ";
 
+					if (cin.peek() == '\n')cin.ignore();
+					getline(cin, fisier);
+
+					ifstream g(fisier, ios::in | ios::binary | ios::_Nocreate);
+				}
 				g.read((char*)&rezultat, sizeof(rezultat));
 
 				g.close();
 
 				copie2 = to_string(rezultat);
 			}
-		cout << endl << "ECUATIE: ";
-
-		if (dorinta == 1) cout << rezultat;
-
-		cin >> ecuatie;
+		
+			if (dorintaBin == 1)
+			{
+				cout << endl << "ECUATIE: ";
+				cout << rezultat;
+			}
+		}
+		
+		
+		if (dorinta == 1)
+		{
+			cout << endl << "ECUATIE: ";
+			cin >> ecuatie;
+		}
 
 		if (ecuatie == "EXIT") cout << "MULTUMIM DE VIZITA!";
 		else
 		{
 			// COPIE PRIMESTE VALOAREA ECUATIEI CARE ESTE TRANSFERATA IN ECUATIESEPARATA //
 
-			copie = ecuatie.getEcuatie();
-			if (dorinta == 1) copie = copie2 + copie;
+			if(dorinta == 1)copie = ecuatie.getEcuatie();
+			else
+			{
+				ifstream f;
+
+				cout << "SCRIETI NUMELE FISIERULUI DE UNDE DORITI SA EXTRAGETI ECUATIA: ";
+
+				if (cin.peek() == '\n')cin.ignore();
+				getline(cin, fisier);
+
+				f.open(fisier, ios::in | ios::_Nocreate);
+
+				while (!f.is_open())
+				{
+					cout << "FISIERUL PRECIZAT NU EXISTA, INCERCATI DIN NOU: ";
+
+					if (cin.peek() == '\n')cin.ignore();
+					getline(cin, fisier);
+
+					f.open(fisier, ios::in | ios::_Nocreate);
+				}
+
+				getline(f, copie);
+
+				f.close();
+				cout << endl << "ECUATIE: " << copie;
+			}
+			if (dorintaBin == 1) copie = copie2 + copie;
 
 			ecuatieSeparata.setEcuatie(copie);
 
@@ -100,7 +158,12 @@ int main()
 
 				// SE VERIFICA VALIDITATEA ECUATIEI //
 
-				verificare = calc.verificare();
+				v2.setNumere(numere, n);
+				v2.setSemne(semne);
+
+				v1 = &v2;
+
+				verificare = v1->verif();
 				if (verificare == 0)cout << "ECUATIE INCORECTA INCERCATI DIN NOU";
 				else
 				{
