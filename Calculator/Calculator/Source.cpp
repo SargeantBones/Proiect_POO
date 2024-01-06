@@ -9,6 +9,7 @@
 #include "Calculator.h"
 #include "Verificator.h"
 #include "Verifica.h"
+#include "Fisier.h"
 #include<fstream>
 
 using namespace std;
@@ -22,6 +23,7 @@ int main()
 	Ecuatie ecuatie("Ecuatie Nedefinita");
 	Separator ecuatieSeparata;
 	Calculator calc;
+	Fisier fis;
 
 	string copie, copie2, iesire, fisier;
 	double* numere = nullptr;
@@ -56,24 +58,7 @@ int main()
 			// DACA UTILIZATORUL DORESTE SA SE FOLOSEASCA DE UN REZULTAT TRECUT //
 			if (dorintaBin == 1)
 			{
-				cout << "INTRODUCETI NUMELE FISIERULUI DE UNDE DORITI SA OBTINETI REZULTATUL: ";
-
-				if (cin.peek() == '\n')cin.ignore();
-				getline(cin, fisier);
-
-				ifstream g(fisier, ios::in | ios::binary | ios::_Nocreate);
-				while (!g.is_open())
-				{
-					cout << "FISIERUL PRECIZAT NU EXISTA, INCERCATI DIN NOU: ";
-
-					if (cin.peek() == '\n')cin.ignore();
-					getline(cin, fisier);
-
-					ifstream g(fisier, ios::in | ios::binary | ios::_Nocreate);
-				}
-				g.read((char*)&rezultat, sizeof(rezultat));
-
-				g.close();
+				rezultat = fis.citireBin();
 
 				copie2 = to_string(rezultat);
 			}
@@ -88,7 +73,7 @@ int main()
 		
 		if (dorinta == 1)
 		{
-			cout << endl << "ECUATIE: ";
+			if(dorintaBin != 1)cout << endl << "ECUATIE: ";
 			cin >> ecuatie;
 		}
 
@@ -100,28 +85,8 @@ int main()
 			if(dorinta == 1)copie = ecuatie.getEcuatie();
 			else
 			{
-				ifstream f;
+				copie = fis.citireText();
 
-				cout << "SCRIETI NUMELE FISIERULUI DE UNDE DORITI SA EXTRAGETI ECUATIA: ";
-
-				if (cin.peek() == '\n')cin.ignore();
-				getline(cin, fisier);
-
-				f.open(fisier, ios::in | ios::_Nocreate);
-
-				while (!f.is_open())
-				{
-					cout << "FISIERUL PRECIZAT NU EXISTA, INCERCATI DIN NOU: ";
-
-					if (cin.peek() == '\n')cin.ignore();
-					getline(cin, fisier);
-
-					f.open(fisier, ios::in | ios::_Nocreate);
-				}
-
-				getline(f, copie);
-
-				f.close();
 				cout << endl << "ECUATIE: " << copie;
 			}
 			if (dorintaBin == 1) copie = copie2 + copie;
@@ -172,6 +137,7 @@ int main()
 					dorinta = 0;
 
 					rezultat = calc.Calcul();
+					fis.setRezultat(rezultat);
 					cout << endl << "DORITI CA REZULTATUL SA FIE AFISAT INTR-UN FISIER TEXT (1), SAU IN CONSOLA (2): ";
 						while (dorinta != 1 && dorinta != 2)
 						{
@@ -179,20 +145,8 @@ int main()
 							if (dorinta != 1 && dorinta != 2) cout << endl << "NU EXISTA ACEASTA OPTIUNE INCERCATI DIN NOU: ";
 						}
 						if (dorinta == 2) cout << "REZULTAT: " << setprecision(15) << rezultat;
-						else 
-						{
-							ofstream f;
+						else fis.scriereText();
 
-							cout << endl << "NUMITI FISIERUL UNDE DORITI SA FIE AFISAT REZULTATUL ECUATIEI: ";
-							if (cin.peek() == '\n')cin.ignore();
-							getline(cin, fisier);
-
-							f.open(fisier, ios::out | ios::trunc);
-
-							f << rezultat;
-
-							f.close();
-						}
 						dorinta = 0;
 
 						// SALVAM REZULTATELE IN FISIER BINAR DUPA DORINTA UTIILIZATORULUI //
@@ -203,18 +157,7 @@ int main()
 								cin >> dorinta;
 								if (dorinta != 1 && dorinta != 2) cout << endl << "NU EXISTA ACEASTA OPTIUNE INCERCATI DIN NOU: ";
 							}
-							if (dorinta == 1)
-							{
-								cout << endl << "NUMITI FISIERUL UNDE DORITI SA FIE SALVAT REZULTATUL ECUATIEI: ";
-								if (cin.peek() == '\n')cin.ignore();
-								getline(cin, fisier);
-
-								ofstream g(fisier, ios::out | ios::binary);
-								g.write((char*)&rezultat, sizeof(rezultat));
-
-								g.close();
-								
-							}
+							if (dorinta == 1)fis.scriereBin();
 
 						dorinta = 0;
 				}
