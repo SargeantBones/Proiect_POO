@@ -16,7 +16,7 @@ using namespace std;
 
 int main()
 {
-
+	//test//
 	cout << "VA MULTUMIM PENTRU CA A-TI ALES SA FOLOSIT CALC-SCRIPT VER 0.1.";
 	cout << endl<< "INTRODUCETI ECUATIA PE CARE O DORITI SA O CALCULATI.DACA DORIT SA IESITI DIN PROGRAM, TASTATI 'EXIT' "<<endl;
 	
