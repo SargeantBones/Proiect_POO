@@ -11,7 +11,7 @@ string simbolRetinut = "";
 
 class Calculator
 {
-protected:
+protected:	
 	char* semne = nullptr;
 	double* numere = nullptr;
 	int noNumber = 0;
@@ -325,6 +325,16 @@ public:
 			else if (simbol == "#") r = pow(r, 1.0 / subEcuatie(i, j, simbol));
 		}
 		return r;
+	}
+
+	virtual double getRezultat()
+	{
+		return this->Calcul();
+	}
+
+	virtual void printareRezultat()
+	{
+		cout << setprecision(15) << this->Calcul();
 	}
 
 	~Calculator()

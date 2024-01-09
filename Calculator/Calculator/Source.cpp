@@ -10,6 +10,7 @@
 #include "Verificator.h"
 #include "Verifica.h"
 #include "Fisier.h"
+#include "Rezultat.h"
 #include<fstream>
 
 using namespace std;
@@ -22,8 +23,9 @@ int main()
 	
 	Ecuatie ecuatie("Ecuatie Nedefinita");
 	Separator ecuatieSeparata;
-	Calculator calc;
+	Calculator* calc;
 	Fisier fis;
+	Rezultat rez;
 
 	string copie, copie2, iesire, fisier;
 	double* numere = nullptr;
@@ -118,8 +120,9 @@ int main()
 
 				// SE CALCULEAZA REZULTATUL CU AJUTORUL CELOR DOUA SIRURI //
 
-				calc.setNumere(numere, n);
-				calc.setSemne(semne);
+				calc = new Calculator();
+				calc->setNumere(numere, n);
+				calc->setSemne(semne);
 
 				// SE VERIFICA VALIDITATEA ECUATIEI //
 
@@ -136,15 +139,24 @@ int main()
 
 					dorinta = 0;
 
-					rezultat = calc.Calcul();
-					fis.setRezultat(rezultat);
+					rez.setNumere(numere, n);
+					rez.setSemne(semne);
+
+					rez.setRezultat();
+					
+					calc = &rez;
+
+					fis.setRezultat(calc->getRezultat());
 					cout << endl << "DORITI CA REZULTATUL SA FIE AFISAT INTR-UN FISIER TEXT (1), SAU IN CONSOLA (2): ";
 						while (dorinta != 1 && dorinta != 2)
 						{
 							cin >> dorinta;
 							if (dorinta != 1 && dorinta != 2) cout << endl << "NU EXISTA ACEASTA OPTIUNE INCERCATI DIN NOU: ";
 						}
-						if (dorinta == 2) cout << "REZULTAT: " << setprecision(15) << rezultat;
+						if (dorinta == 2) {
+							cout << "REZULTAT: ";
+							calc->printareRezultat();
+						}
 						else fis.scriereText();
 
 						dorinta = 0;
