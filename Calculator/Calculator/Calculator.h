@@ -3,6 +3,8 @@
 
 #include<iostream>
 #include<string>
+#include<vector>
+#include<iterator>
 #include<cmath>
 
 using namespace std;
@@ -40,10 +42,20 @@ public:
 	{
 		this->numere = nullptr;
 		this->numere = new double[m];
+
+		vector < double > v;
 		for (int i = 0; i < m; i++)
 		{
-			this->numere[i] = nr[i];
+			v.push_back(nr[i]);	
 		}
+
+		int i = 0;
+		for (vector<double>::iterator it = v.begin(); it != v.end(); it++)
+		{
+			this->numere[i] = *it;
+			i++;
+		}
+	
 		this->setNoNumber(m);
 	}
 	double* getNumere()
@@ -108,12 +120,6 @@ public:
 			simbolRetinut = SimnbolStocat;
 			return r;
 		}
-		else if (this->semne[j - 2] == ')' || this->semne[j - 2] == ']')
-		{
-			SimnbolStocat = this->semne[j];
-			simbolRetinut = SimnbolStocat;
-			return r;
-		}
 
 		if (this->semne[j] == '[' || this->semne[j] == '(')
 		{
@@ -121,7 +127,7 @@ public:
 			j++;
 			if (this->semne[j] == '[')
 			{
-			
+
 				s = parantezaPatrata(i, j);
 			}
 			else
@@ -129,6 +135,15 @@ public:
 				s = parantezaRotunda(i, j);
 			}
 		}
+
+		else if (this->semne[j - 2] == ')' || this->semne[j - 2] == ']')
+		{
+			SimnbolStocat = this->semne[j];
+			simbolRetinut = SimnbolStocat;
+			return r;
+		}
+
+		
 		if (s != -1)
 		{
 			if (SimnbolStocat == "+") r = r + s;
