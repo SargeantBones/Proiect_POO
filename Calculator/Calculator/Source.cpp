@@ -17,6 +17,7 @@ using namespace std;
 
 int main()
 {
+
 	//test//
 	cout << "VA MULTUMIM PENTRU CA A-TI ALES SA FOLOSIT CALC-SCRIPT VER 0.1.";
 	cout << endl<< "INTRODUCETI ECUATIA PE CARE O DORITI SA O CALCULATI.DACA DORIT SA IESITI DIN PROGRAM, TASTATI 'EXIT' "<<endl;
@@ -82,7 +83,7 @@ int main()
 		if (ecuatie == "EXIT") cout << "MULTUMIM DE VIZITA!";
 		else
 		{
-			// COPIE PRIMESTE VALOAREA ECUATIEI CARE ESTE TRANSFERATA IN ECUATIESEPARATA //
+			// COPIE PRIMESTE VALOAREA ECUATIEI CARE ESTE TRANSFERATA IN ECUATIE SEPARATA //
 
 			if(dorinta == 1)copie = ecuatie.getEcuatie();
 			else
@@ -90,6 +91,10 @@ int main()
 				copie = fis.citireText();
 
 				cout << endl << "ECUATIE: " << copie;
+				ecuatie.setCopie(copie);
+				ecuatie.setEcuatie();
+
+				copie = ecuatie.getEcuatie();
 			}
 			if (dorintaBin == 1) copie = copie2 + copie;
 

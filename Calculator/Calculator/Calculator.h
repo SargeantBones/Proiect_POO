@@ -125,7 +125,7 @@ public:
 		{
 			i--;
 			j++;
-			if (this->semne[j] == '[')
+			if (this->semne[j-1] == '[')
 			{
 
 				s = parantezaPatrata(i, j);
@@ -135,6 +135,15 @@ public:
 				s = parantezaRotunda(i, j);
 			}
 		}
+
+		if (this->semne[j] == ')' || this->semne[j] == ']')
+		{
+			j++;
+			SimnbolStocat = this->semne[j];
+			simbolRetinut = SimnbolStocat;
+			return r;
+		}
+
 
 		else if (this->semne[j - 2] == ')' || this->semne[j - 2] == ']')
 		{
