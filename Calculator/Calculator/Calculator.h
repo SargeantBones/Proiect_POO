@@ -141,6 +141,7 @@ public:
 			j++;
 			SimnbolStocat = this->semne[j];
 			simbolRetinut = SimnbolStocat;
+			if (s != -1) return s;
 			return r;
 		}
 
@@ -149,6 +150,7 @@ public:
 		{
 			SimnbolStocat = this->semne[j];
 			simbolRetinut = SimnbolStocat;
+			if (s != -1)return s;
 			return r;
 		}
 
